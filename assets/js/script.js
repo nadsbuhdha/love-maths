@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function(){
     for (let button of buttons){
         button.addEventListener('click', function(){
             if (this.getAttribute('data-type')==='submit') {
-                alert('You Clicked Submit');
+                checkAnswer();
             } else {
                 let gameType = this.getAttribute('data-type');
                 runGame(gameType);
@@ -27,7 +27,37 @@ if (gameType === 'addition') {
 }
 }
 
+/**check answer against first element in array */
 function checkAnswer() {
+    let userAnswer = parseInt(document.getElementById('answer-box').value);
+    let calculatedAnswer = calculateCorrectAnswer();
+
+    let isCorrect = userAnswer === calculatedAnswer[0]
+
+    if (isCorrect) {
+        alert('Hey you got it correct! :D')
+    } else {
+        alert(`you answered ${userAnswer}. The correct answer is ${calculatedAnswer[0]!}`)
+    }
+
+    runGame(calculatedAnswer[1]);
+
+}
+
+//** gets numbers and operators and returns correct answer from the dom*/
+function calculateCorrectAnswer() {
+    let operand1 = parseInt (document.getElementById('operand1').innerText);
+    let operand2 = parseInt (document.getElementById('operand2').innerText);
+    let operator = document.getElementById('operator').innerText;
+
+    if (operator === "+") {
+        return [operand1 + operand2, 'addition']; 
+    } else {
+        alert (`unimplemented operator ${operator}`)
+        throw `unimplemented operator ${operator}.Aborting!`;
+    }
+
+
 
 }
 
